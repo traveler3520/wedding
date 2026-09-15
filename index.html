@@ -1,0 +1,584 @@
+# wedding
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>张伟 &amp; 李娜 · 婚礼邀请</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FDFBF7;
+    --cream-2: #F8F3EA;
+    --gold: #B8956A;
+    --gold-light: #E3D5BE;
+    --dark: #3A3532;
+    --text: #6B625B;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif {
+    font-family: "Songti SC", "STSong", "SimSun", Georgia, serif;
+    font-weight: normal;
+  }
+
+  /* ===== 封面 ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: radial-gradient(circle at 50% 0%, #F7F0E4 0%, #FDFBF7 60%);
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-indent: 5px;
+  }
+
+  .hero-names {
+    font-size: clamp(34px, 9vw, 58px);
+    color: var(--dark);
+    letter-spacing: 3px;
+    margin: 26px 0 18px;
+    line-height: 1.4;
+  }
+
+  .hero-names .amp {
+    color: var(--gold);
+    font-style: italic;
+    margin: 0 6px;
+    font-size: 0.75em;
+  }
+
+  .hero-date {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--text);
+  }
+
+  .hero-line {
+    width: 48px;
+    height: 1px;
+    background: var(--gold-light);
+    margin: 32px auto;
+  }
+
+  /* 倒计时 */
+  .countdown {
+    display: flex;
+    gap: 22px;
+    margin-top: 8px;
+  }
+
+  .cd-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 52px;
+  }
+
+  .cd-num {
+    font-family: "Songti SC", "STSong", Georgia, serif;
+    font-size: 30px;
+    color: var(--dark);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cd-label {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .hero-invite {
+    margin-top: 44px;
+    font-size: 14px;
+    letter-spacing: 3px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 18px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translate(-50%, 0); opacity: .5; }
+    50% { transform: translate(-50%, 8px); opacity: 1; }
+  }
+
+  /* ===== 通用区块 ===== */
+  .section {
+    padding: 84px 24px;
+  }
+
+  .section.alt {
+    background: var(--cream-2);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 26px;
+    color: var(--dark);
+    text-align: center;
+    letter-spacing: 6px;
+    text-indent: 6px;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 10px 0 44px;
+    text-indent: 4px;
+  }
+
+  /* ===== 婚礼信息 ===== */
+  .info-card {
+    background: #fff;
+    border: 1px solid var(--gold-light);
+    border-radius: 6px;
+    padding: 36px 28px;
+    text-align: center;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #EFE7DA;
+    font-size: 15px;
+  }
+
+  .info-row:last-of-type { border-bottom: none; }
+
+  .info-label {
+    color: var(--gold);
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  .info-value { color: var(--dark); }
+
+  .info-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+
+  /* ===== 按钮 ===== */
+  .btn {
+    display: inline-block;
+    padding: 11px 30px;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    color: var(--gold);
+    background: transparent;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .3s ease;
+  }
+
+  .btn:hover {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  .btn-solid {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  .btn-solid:hover {
+    background: #A3825A;
+    border-color: #A3825A;
+  }
+
+  /* ===== 流程时间轴 ===== */
+  .timeline {
+    list-style: none;
+    position: relative;
+    padding-left: 26px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: var(--gold-light);
+  }
+
+  .timeline li {
+    position: relative;
+    padding: 10px 0 10px 8px;
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+  }
+
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 19px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--cream-2);
+    border: 1.5px solid var(--gold);
+  }
+
+  .t-time {
+    font-family: "Songti SC", Georgia, serif;
+    color: var(--gold);
+    font-size: 15px;
+    letter-spacing: 1px;
+    min-width: 52px;
+  }
+
+  .t-text { color: var(--dark); font-size: 15px; }
+
+  /* ===== 照片墙 ===== */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .photo {
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #EFE6D8, #E0D2BC);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #A99B85;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ===== 卡片 ===== */
+  .cards {
+    display: grid;
+    gap: 16px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--gold-light);
+    border-radius: 6px;
+    padding: 26px 24px;
+  }
+
+  .card h3 {
+    font-size: 15px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: normal;
+  }
+
+  .card p { font-size: 14px; }
+
+  /* ===== RSVP ===== */
+  .rsvp-text {
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  .rsvp-action { text-align: center; }
+
+  /* ===== 页脚 ===== */
+  .footer {
+    text-align: center;
+    padding: 56px 24px 64px;
+    background: var(--cream-2);
+  }
+
+  .footer .names {
+    font-size: 20px;
+    color: var(--dark);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .footer .date {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+
+  /* ===== 滚动淡入 ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 600px) {
+    .section { padding: 64px 20px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+    .countdown { gap: 14px; }
+    .cd-num { font-size: 25px; }
+    .info-row { flex-direction: column; gap: 2px; }
+    .timeline { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== 封面 ==================== -->
+<header class="hero">
+  <p class="hero-eyebrow">WE ARE GETTING MARRIED</p>
+  <h1 class="hero-names serif">张伟 <span class="amp">&amp;</span> 李娜</h1>
+  <p class="hero-date">2026 年 10 月 1 日 · 星期四</p>
+
+  <div class="hero-line"></div>
+
+  <div class="countdown" id="countdown">
+    <div class="cd-item"><span class="cd-num" id="cd-d">00</span><span class="cd-label">天</span></div>
+    <div class="cd-item"><span class="cd-num" id="cd-h">00</span><span class="cd-label">时</span></div>
+    <div class="cd-item"><span class="cd-num" id="cd-m">00</span><span class="cd-label">分</span></div>
+    <div class="cd-item"><span class="cd-num" id="cd-s">00</span><span class="cd-label">秒</span></div>
+  </div>
+
+  <p class="hero-invite">诚挚邀请您见证我们的幸福时刻</p>
+  <a href="#info" class="scroll-hint" aria-label="向下浏览">↓</a>
+</header>
+
+<!-- ==================== 婚礼信息 ==================== -->
+<section class="section" id="info">
+  <div class="container">
+    <h2 class="section-title serif">婚礼信息</h2>
+    <p class="section-sub">The Wedding</p>
+
+    <div class="reveal">
+      <div class="info-card">
+        <div class="info-row">
+          <span class="info-label">时 间</span>
+          <span class="info-value">2026 年 10 月 1 日 11:58</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">地 点</span>
+          <span class="info-value">XX 酒店 三楼 宴会厅</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">地 址</span>
+          <span class="info-value">XX 省 XX 市 XX 区 XX 路 88 号</span>
+        </div>
+
+        <div class="info-actions">
+          <!-- 把 keyword 换成你的酒店名 -->
+          <a class="btn" href="https://uri.amap.com/search?keyword=XX酒店"
+             target="_blank" rel="noopener">查看地图</a>
+          <button class="btn" id="copyAddr"
+                  data-addr="XX省XX市XX区XX路88号">复制地址</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 婚礼流程 ==================== -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title serif">婚礼流程</h2>
+    <p class="section-sub">Schedule</p>
+
+    <ul class="timeline">
+      <li class="reveal"><span class="t-time">11:00</span><span class="t-text">宾客签到 · 合影留念</span></li>
+      <li class="reveal"><span class="t-time">11:58</span><span class="t-text">婚礼仪式正式开始</span></li>
+      <li class="reveal"><span class="t-time">12:30</span><span class="t-text">午宴开席</span></li>
+      <li class="reveal"><span class="t-time">14:00</span><span class="t-text">自由合影 · 送客</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 照片墙 ==================== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title serif">我们的照片</h2>
+    <p class="section-sub">Gallery</p>
+
+    <div class="gallery">
+      <!-- 想换成真实照片时，把下面每个 div 替换为：
+           <div class="photo"><img src="images/photo1.jpg" alt="婚纱照"></div> -->
+      <div class="photo reveal">照片 1</div>
+      <div class="photo reveal">照片 2</div>
+      <div class="photo reveal">照片 3</div>
+      <div class="photo reveal">照片 4</div>
+      <div class="photo reveal">照片 5</div>
+      <div class="photo reveal">照片 6</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 交通与住宿 ==================== -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title serif">交通与住宿</h2>
+    <p class="section-sub">Travel &amp; Stay</p>
+
+    <div class="cards">
+      <div class="card reveal">
+        <h3>自 驾</h3>
+        <p>导航搜索「XX 酒店」，酒店地下停车场可免费停车。</p>
+      </div>
+      <div class="card reveal">
+        <h3>地 铁</h3>
+        <p>地铁 X 号线 XX 站 B 出口，步行约 500 米。</p>
+      </div>
+      <div class="card reveal">
+        <h3>住 宿</h3>
+        <p>如需住宿，可联系 XX 酒店，报「张伟婚礼」享协议价。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 出席回执 ==================== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title serif">期待您的到来</h2>
+    <p class="section-sub">RSVP</p>
+
+    <p class="rsvp-text">
+      为了让我们更好地安排座位，<br>
+      请您在 9 月 20 日前回复是否出席。
+    </p>
+
+    <div class="rsvp-action">
+      <!-- 把 href 换成你的腾讯问卷 / 金数据 / 问卷星链接 -->
+      <a class="btn btn-solid" href="#" target="_blank" rel="noopener">填写出席回执</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 页脚 ==================== -->
+<footer class="footer">
+  <p class="names serif">张伟 &amp; 李娜</p>
+  <p class="date">2026.10.01</p>
+</footer>
+
+<script>
+  /* ===== 倒计时 ===== */
+  // 改成你的婚礼时间
+  const WEDDING_TIME = new Date('2026-10-01T11:58:00+08:00').getTime();
+
+  const el = {
+    d: document.getElementById('cd-d'),
+    h: document.getElementById('cd-h'),
+    m: document.getElementById('cd-m'),
+    s: document.getElementById('cd-s')
+  };
+
+  function updateCountdown() {
+    let diff = WEDDING_TIME - Date.now();
+
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<p style="font-size:15px;letter-spacing:2px;color:#B8956A;">婚礼已圆满举行，感谢您的祝福</p>';
+      clearInterval(timer);
+      return;
+    }
+
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+
+    el.d.textContent = String(days).padStart(2, '0');
+    el.h.textContent = String(hours).padStart(2, '0');
+    el.m.textContent = String(mins).padStart(2, '0');
+    el.s.textContent = String(secs).padStart(2, '0');
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+
+  /* ===== 复制地址 ===== */
+  const copyBtn = document.getElementById('copyAddr');
+  copyBtn.addEventListener('click', async function () {
+    const addr = this.dataset.addr;
+    try {
+      await navigator.clipboard.writeText(addr);
+      const old = this.textContent;
+      this.textContent = '已复制 ✓';
+      setTimeout(() => { this.textContent = old; }, 1500);
+    } catch (e) {
+      alert('地址：' + addr);
+    }
+  });
+
+  /* ===== 滚动淡入 ===== */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach((node) => io.observe(node));
+</script>
+
+</body>
+</html>
