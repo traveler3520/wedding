@@ -743,19 +743,56 @@
 
   document.querySelectorAll('.reveal').forEach((node) => io.observe(node));
 
-  /* ==================== 音乐播放控制（新增） ==================== */
+  /* ==================== 音乐播放控制（自动+触摸兜底） ==================== */
   const bgm = document.getElementById('bgm');
   const musicBtn = document.getElementById('music-btn');
 
-  musicBtn.addEventListener('click', function() {
+  // 1. 监听音频状态，自动更新按钮旋转动画
+  bgm.addEventListener('play', () => {
+    musicBtn.classList.add('playing');
+  });
+  bgm.addEventListener('pause', () => {
+    musicBtn.classList.remove('playing');
+  });
+
+  // 2. 定义首次触摸/点击屏幕的播放函数
+  function playOnFirstInteraction() {
     if (bgm.paused) {
-      bgm.play();
-      this.classList.add('playing');
+      bgm.play().then(() => {
+        // 播放成功后，移除事件监听，避免每次滑动都重复触发
+        removeInteractionListeners();
+      }).catch(e => {
+        // 静默失败，不弹窗打扰宾客
+        console.log('触摸播放失败:', e);
+      });
+    } else {
+      // 已经在播放了，直接移除监听
+      removeInteractionListeners();
+    }
+  }
+
+  // 移除事件监听的辅助函数
+  function removeInteractionListeners() {
+    document.removeEventListener('touchstart', playOnFirstInteraction);
+    document.removeEventListener('click', playOnFirstInteraction);
+  }
+
+  // 3. 全局监听首次触摸或点击
+  document.addEventListener('touchstart', playOnFirstInteraction);
+  document.addEventListener('click', playOnFirstInteraction);
+
+  // 4. 保留右下角按钮的手动播放/暂停功能
+  musicBtn.addEventListener('click', function(e) {
+    // 阻止事件冒泡，防止点按钮时触发了上面的“全局触摸播放”逻辑
+    e.stopPropagation(); 
+    
+    if (bgm.paused) {
+      bgm.play().catch(e => console.log('按钮播放失败:', e));
     } else {
       bgm.pause();
-      this.classList.remove('playing');
     }
   });
+  
 </script>
 
 </body>
