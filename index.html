@@ -414,6 +414,36 @@
     color: var(--maroon-light);
   }
 
+  /* ==================== 音乐播放按钮样式 ==================== */
+  #music-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--maroon);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(139,26,26,0.4);
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+
+  #music-btn:hover {
+    transform: scale(1.1);
+  }
+
+  #music-btn.playing svg {
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
+  }
+
   /* ==================== 响应式适配（手机端） ==================== */
   @media (max-width: 768px) {
     .hero-container {
@@ -457,7 +487,7 @@
         我们故事里至关重要的一页新章
       </p>
 
-      <!-- 卡通小人插图（可以用在线图片或本地图片替换） -->
+      <!-- 卡通人物插图（可以用在线图片或本地图片替换） -->
       <div class="hero-illustration">
         <!-- 这里用了一个简单的 SVG 占位，自己的线稿图片 -->
         <svg viewBox="0 0 200 100" fill="none" stroke="#8B1A1A" stroke-width="1.5">
@@ -599,7 +629,7 @@
     <p class="section-sub">Travel &amp; Stay</p>
 
     <div class="cards">
-      <!-- 此部分内容可根据当地的实际情况修改 -->
+      <!-- 此部分内容可根据实际情况修改 -->
       <div class="card reveal">
         <h3>自 驾</h3>
         <p>导航搜索「连城县永兴楼酒楼」，酒店附近有停车场。</p>
@@ -641,6 +671,10 @@
   </p>
   <p class="save-date serif">Save the date</p>
 </footer>
+
+<!-- ==================== 音乐播放器（新增） ==================== -->
+<audio id="bgm" src="music/bgm.mp3" loop></audio>
+<button id="music-btn" aria-label="播放/暂停音乐">🎵</button>
 
 <script>
   /* ==================== 倒计时逻辑 ==================== */
@@ -707,6 +741,20 @@
   }, { threshold: 0.15 });
 
   document.querySelectorAll('.reveal').forEach((node) => io.observe(node));
+
+  /* ==================== 音乐播放控制（新增） ==================== */
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('music-btn');
+
+  musicBtn.addEventListener('click', function() {
+    if (bgm.paused) {
+      bgm.play();
+      this.classList.add('playing');
+    } else {
+      bgm.pause();
+      this.classList.remove('playing');
+    }
+  });
 </script>
 
 </body>
